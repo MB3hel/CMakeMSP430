@@ -12,6 +12,14 @@ else()
     set(EXE_EXTENSION "")
 endif()
 
+# Allow overriding default paths with environment variables
+if(DEFINED ENV{TI_MSP430_GCC_ROOT})
+    set(MSP430_GCC_PATH "$ENV{TI_MSP430_GCC_ROOT}")
+endif()
+if(DEFINED ENV{MSPDEBUG_ROOT})
+    set(MSPDEBUG_PATH "$ENV{MSPDEBUG_ROOT}")
+endif()
+
 set(CMAKE_SYSTEM_NAME               Generic)
 set(CMAKE_SYSTEM_PROCESSOR          msp430)
 set(CMAKE_CROSSCOMPILING 1)

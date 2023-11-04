@@ -10,7 +10,7 @@
         {
             "label": "mspdebug-server",
             "type": "shell",
-            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target debug-server",
+            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target mspdebug-server",
             "isBackground": true,
             "problemMatcher": [
                 {

@@ -9,7 +9,7 @@ int main(void){
     WDTCTL = WDTPW | WDTHOLD;       // Disable WDT
     P1DIR |= BIT0;                  // P1.0 as output
     P1SEL &= ~BIT0;                 // P1.0 GPIO function
-    P1SEL2 *= ~BIT0;                // P1.0 GPIO function
+    P1SEL2 &= ~BIT0;                // P1.0 GPIO function
     P1OUT |= BIT0;                  // P1.0 HIGH
     ////////////////////////////////////////////////////////////////////////////
 

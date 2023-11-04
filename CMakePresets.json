@@ -8,7 +8,7 @@
     "configurePresets": [
         {
             "name": "g2553",
-            "displayName": "G2553",
+            "displayName": "MSP430G2553",
             "description": "MSP430G2553 Target",
             "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/build/g2553",

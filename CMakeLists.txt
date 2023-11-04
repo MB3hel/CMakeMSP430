@@ -1,14 +1,13 @@
 cmake_minimum_required(VERSION 3.20.0)
 project(BlinkDemo)
 
-################################################################################
-# General Settings, flags, and paths
-################################################################################
-
 # Do not set here! Define presets in CMakePresets.json!
 string(TOLOWER "${TARGET_CHIP}" TARGET_CHIP_LOWER)
 string(TOUPPER "${TARGET_CHIP}" TARGET_CHIP_UPPER)
 
+################################################################################
+# General Settings, flags, and paths
+################################################################################
 # Add additional source paths here
 file(GLOB_RECURSE SOURCES 
     "${PROJECT_SOURCE_DIR}/src/*.c"
@@ -71,7 +70,6 @@ endif()
 # C standard
 set(REQ_C_STANDARD      11)
 set(REQ_CPP_STANDARD    14)
-
 ################################################################################
 
 
@@ -113,7 +111,6 @@ add_custom_target(flash
 ################################################################################
 add_custom_target(mspdebug-server
     COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "gdb"
-    DEPENDS ${CMAKE_PROJECT_NAME}
     VERBATIM
     USES_TERMINAL
 )
