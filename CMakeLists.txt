@@ -65,5 +65,7 @@ add_custom_target(flash
 add_custom_target(debug-server
     COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "gdb"
     DEPENDS ${CMAKE_PROJECT_NAME}
+    VERBATIM
+    USES_TERMINAL
 )
 ################################################################################
