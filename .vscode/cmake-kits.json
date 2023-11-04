@@ -1,0 +1,7 @@
+[
+    {
+        "name": "MSP430 GCC Toolchain",
+        "toolchainFile": "${workspaceFolder}/msp430-gcc-toolchain.cmake",
+        "preferredGenerator": {"name": "Ninja"}
+    }
+]

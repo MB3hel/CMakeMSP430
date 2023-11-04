@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Launch via GDB",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/firmware.elf",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "windows": {
+                "miDebuggerPath": "C:/ti/msp430-gcc/bin/msp430-elf-gdb.exe"
+            },
+            "linux": {
+                "miDebuggerPath": "/opt/ti/msp430-gcc/bin/msp430-elf-gdb"
+            },
+            "osx": {
+                // TODO
+            },
+            "miDebuggerServerAddress": "localhost:2000",
+            "preLaunchTask": "DebugServerBG"
+        }
+    ]
+}

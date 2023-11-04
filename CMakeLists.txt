@@ -43,16 +43,27 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${INCLUDES})
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ${DEFINES})
 target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC ${SHARED_FLAGS} ${CFLAGS})
 target_link_options(${CMAKE_PROJECT_NAME} PUBLIC ${SHARED_FLAGS} ${LDFLAGS})
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME "firmware")
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME}  POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex "$<OUTPUT_CONFIG:$<CONFIG>>/${CMAKE_PROJECT_NAME}.elf" "$<OUTPUT_CONFIG:$<CONFIG>>/${CMAKE_PROJECT_NAME}.hex"
+    COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex "${CMAKE_BINARY_DIR}/firmware.elf" "${CMAKE_BINARY_DIR}/firmware.hex"
 )
 ################################################################################
 
 ################################################################################
 # Flash target
 ################################################################################
-add_custom_target(flash-debug
-    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex" "verify ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex"
+add_custom_target(flash
+    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.hex" "verify ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.hex"
+    DEPENDS ${CMAKE_PROJECT_NAME}
+)
+################################################################################
+
+
+################################################################################
+# Debug server target
+################################################################################
+add_custom_target(debug-server
+    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "gdb"
     DEPENDS ${CMAKE_PROJECT_NAME}
 )
 ################################################################################
