@@ -16,7 +16,7 @@
                 "miDebuggerPath": "${workspaceFolder}/util/msp430-elf-gdb.cmd"
             },
             "miDebuggerServerAddress": "localhost:2000",
-            "preLaunchTask": "mspdebug-server"
+            "preLaunchTask": "BuildAndServer"
         }
     ]
 }

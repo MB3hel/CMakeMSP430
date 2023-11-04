@@ -2,6 +2,12 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Build",
+            "type": "shell",
+            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName}",
+            "problemMatcher": []
+        },
+        {
             "label": "Flash",
             "type": "shell",
             "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target flash",
@@ -28,6 +34,14 @@
                         "endsPattern": "^.*Bound*"
                     }
                 }
+            ]
+        },
+        {
+            "label": "BuildAndServer",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "mspdebug-server"
             ]
         }
     ]
