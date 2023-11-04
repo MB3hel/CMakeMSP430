@@ -8,7 +8,7 @@ This example is setup for a G2553 launchpad (newer version with ez-FET debugger)
     - Install from [TI's Site](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE)
     - Install to default location (use installer not toolchain only archives as the support files are needed too).
     - Do not use Linux system packages (these are typically the older non-elf toolchain which is gcc 4.6). The newer elf toolchain is needed!
-- Requires CMake
+- Requires CMake 3.20 or newer
 - Requires ninja build system installed
 - Flashing and debugging requires [mspdebug](https://github.com/dlbeer/mspdebug)
     - Download one the pre-built archives from release section of this repo (TODO)

@@ -4,13 +4,13 @@
         {
             "label": "Flash",
             "type": "shell",
-            "command": "cmake --build build --target flash",
+            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target flash",
             "problemMatcher": []
         },
         {
             "label": "mspdebug-server",
             "type": "shell",
-            "command": "cmake --build build --target debug-server",
+            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target debug-server",
             "isBackground": true,
             "problemMatcher": [
                 {

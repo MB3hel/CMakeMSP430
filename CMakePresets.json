@@ -1,0 +1,49 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "g2553",
+            "displayName": "G2553",
+            "description": "MSP430G2553 Target",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/g2553",
+            "cacheVariables": {
+                "TARGET_CHIP": "g2553",
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/msp430-gcc-toolchain.cmake"
+            },
+            "environment": {},
+            "vendor": {}
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "g2553-debug",
+            "displayName": "Debug",
+            "configurePreset": "g2553",
+            "configuration": "Debug"
+        },
+        {
+            "name": "g2553-release",
+            "displayName": "Release",
+            "configurePreset": "g2553",
+            "configuration": "Release"
+        },
+        {
+            "name": "g2553-minsizerel",
+            "displayName": "MinSizeRel",
+            "configurePreset": "g2553",
+            "configuration": "MinSizeRel"
+        },
+        {
+            "name": "g2553-relwithdebinfo",
+            "displayName": "RelWithDebInfo",
+            "configurePreset": "g2553",
+            "configuration": "RelWithDebInfo"
+        }
+    ]
+}

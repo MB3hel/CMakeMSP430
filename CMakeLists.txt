@@ -1,29 +1,38 @@
 cmake_minimum_required(VERSION 3.20.0)
-project(BlinkDemo C)
+project(BlinkDemo)
 
 ################################################################################
-# Firmware build
+# General Settings, flags, and paths
 ################################################################################
-set(TARGET_CHIP g2553)
+
+# Do not set here! Define presets in CMakePresets.json!
+string(TOLOWER "${TARGET_CHIP}" TARGET_CHIP_LOWER)
 string(TOUPPER "${TARGET_CHIP}" TARGET_CHIP_UPPER)
+
+# Add additional source paths here
 file(GLOB_RECURSE SOURCES 
     "${PROJECT_SOURCE_DIR}/src/*.c"
 )
+
+# Add additional include paths here
 set(INCLUDES
     "${MSP430_GCC_PATH}/include"
     "${PROJECT_SOURCE_DIR}/include"
 )
+
+# Add additional preprocessor definitions here
 set(DEFINES
     __MSP430${TARGET_CHIP_UPPER}__
 )
-set(SHARED_FLAGS
-    -mmcu=msp430${TARGET_CHIP}
-    -fno-exceptions
 
-    # Not needed for G2553 chip
-    # -msmall or -mlarge
-    # -mhwmult=auto
+# Flags for both C compiler, C++ compiler, assembler, and linker
+set(SHARED_FLAGS
+    -mmcu=msp430${TARGET_CHIP_LOWER}
+    -fno-exceptions
+    -mhwmult=auto
 )
+
+# Flags only for C compiler (.c files)
 set(CFLAGS
     -Wall
     -Wextra
@@ -31,30 +40,70 @@ set(CFLAGS
     -fdata-sections
     -MMD
 )
+
+# Used only for assembler (.S files)
+set(ASMFLAGS
+    -x assembler-with-cpp
+)
+
+# Flags only for C++ compiler (.cc .cpp .cxx files)
+set(CXXFLAGS
+    -ffunction-sections
+    -fdata-sections
+    -fno-threadsafe-statics
+    -MMD
+    -fno-rtti
+)
+
+# Flags only for linker
 set(LDFLAGS
     -L${MSP430_GCC_PATH}/include/
-    -Tmsp430${TARGET_CHIP}.ld
+    -Tmsp430${TARGET_CHIP_LOWER}.ld
     -Wl,--gc-sections,-u,main
+    -fno-rtti
 )
+
+# Target chip specific flags
+if("${TARGET_CHIP_LOWER}" STREQUAL "g2553")
+    set(SHARED_FLAGS ${SHARED_FLAGS} -msmall)
+endif()
+
+# C standard
+set(REQ_C_STANDARD      11)
+set(REQ_CPP_STANDARD    14)
+
+################################################################################
+
+
+################################################################################
+# Firmware build
+################################################################################
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
-set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD 11)
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD ${REQ_C_STANDARD})
 set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY C_STANDARD_REQUIRED ON)
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD ${REQ_CPP_STANDARD})
+set_property(TARGET ${CMAKE_PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${INCLUDES})
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC ${DEFINES})
-target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC ${SHARED_FLAGS} ${CFLAGS})
+target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC  $<$<COMPILE_LANGUAGE:ASM>:${SHARED_FLAGS} ${ASMFLAGS}>)
+target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC  $<$<COMPILE_LANGUAGE:C>:${SHARED_FLAGS} ${CFLAGS}>)
+target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC  $<$<COMPILE_LANGUAGE:CXX>:${SHARED_FLAGS} ${CXXFLAGS}>)
 target_link_options(${CMAKE_PROJECT_NAME} PUBLIC ${SHARED_FLAGS} ${LDFLAGS})
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME "firmware")
 add_custom_command(TARGET ${CMAKE_PROJECT_NAME}  POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex "${CMAKE_BINARY_DIR}/firmware.elf" "${CMAKE_BINARY_DIR}/firmware.hex"
+    COMMAND ${CMAKE_OBJCOPY} ARGS -O ihex "$<OUTPUT_CONFIG:$<CONFIG>>/firmware.elf" "$<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex"
 )
 ################################################################################
+
 
 ################################################################################
 # Flash target
 ################################################################################
 add_custom_target(flash
-    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.hex" "verify ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}.hex"
+    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex" "verify $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex"
     DEPENDS ${CMAKE_PROJECT_NAME}
+    VERBATIM
+    USES_TERMINAL
 )
 ################################################################################
 
@@ -62,7 +111,7 @@ add_custom_target(flash
 ################################################################################
 # Debug server target
 ################################################################################
-add_custom_target(debug-server
+add_custom_target(mspdebug-server
     COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "gdb"
     DEPENDS ${CMAKE_PROJECT_NAME}
     VERBATIM
