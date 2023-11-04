@@ -52,6 +52,7 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME}  POST_BUILD
 # Flash target
 ################################################################################
 add_custom_target(flash-debug
-    COMMAND mspdebug --allow-fw-update tilib --force-reset "prog ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex" "verify ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex"
+    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex" "verify ${CMAKE_BINARY_DIR}/Debug/${CMAKE_PROJECT_NAME}.hex"
+    DEPENDS ${CMAKE_PROJECT_NAME}
 )
 ################################################################################
