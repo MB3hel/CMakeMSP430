@@ -11,11 +11,11 @@ This example is setup for a G2553 launchpad (newer version with ez-FET debugger)
 - Requires CMake 3.20 or newer
 - Requires ninja build system installed and in your path
 - Flashing and debugging requires [mspdebug](https://github.com/dlbeer/mspdebug)
-    - Download one the pre-built archives from release section of this repo (TODO)
+    - Download one the pre-built archives from release section of this repo
     - Extract to one of the following locations based on your OS
         - Windows: `C:\ti\`
         - macOS: `/Applications/ti`
-        - Linux: `/opt/ti/` (you'll need to do this as root)
+        - Linux: `/opt/ti/`
 - Note that if you install mspdebug or MSP430 GCC to different locations, you can use the `TI_MSP430_GCC_ROOT` and `MSPDEBUG_ROOT` environment variables. If installing MSP430 GCC with the archives (not installers), you also have to install the support files under `include/`.
 
 
