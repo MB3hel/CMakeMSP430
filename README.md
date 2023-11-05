@@ -57,6 +57,8 @@ Click the Build button on the bottom toolbar. This will build the selected confi
 
 ### Flash
 
+Flash will automatically build before flashing.
+
 - Press Ctrl+P (cmd+P on mac)
 - Search for `Tasks: Run Task`
 - Choose the task named `Flash`
@@ -89,7 +91,7 @@ cmake --build --preset g2553-[debug/release/minsizerel/relwithdebinfo]
 
 ### Flash
 
-Make sure only one MSP430 ez-FET is connected. Then run the following command to flash for the given configuration.
+Make sure only one MSP430 ez-FET is connected. Then run the following command to flash for the given configuration. Flash will automatically build before flashing.
 
 ```sh
 cmake --build --preset g2553-[debug/release/minsizerel/relwithdebinfo] --target flash
