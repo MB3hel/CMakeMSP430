@@ -2,14 +2,14 @@
 setlocal
 
 :: Get path to gdb the same way toolchain file gets path for compiler
-IF DEFINED TI_MSP430_GCC_ROOT (
-    set GDB="%TI_MSP430_GCC_ROOT%\bin\msp430-elf-gdb.exe"
+IF DEFINED MSPDEBUG_ROOT (
+    set MSPDEBUG="%MSPDEBUG_ROOT%\mspdebug.exe"
 ) ELSE (
-     set GDB="C:\ti\msp430-gcc\bin\msp430-elf-gdb.exe"
+     set MSPDEBUG="C:\ti\mspdebug\mspdebug.exe"
 )
 
 :: Run GDB with all arguments passed into this script
-"%GDB%" %*
+"%MSPDEBUG%" %*
 
 :: Exit with error code from GDB
 EXIT /B %ERRORLEVEL%

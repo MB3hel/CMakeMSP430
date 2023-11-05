@@ -12,37 +12,6 @@
             "type": "shell",
             "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target flash",
             "problemMatcher": []
-        },
-        {
-            "label": "mspdebug-server",
-            "type": "shell",
-            "command": "cmake --build --preset ${command:cmake.activeBuildPresetName} --target mspdebug-server",
-            "isBackground": true,
-            "problemMatcher": [
-                {
-                    "pattern": [
-                        {
-                            "regexp": ".",
-                            "file": 1,
-                            "location": 2,
-                            "message": 3
-                        }
-                    ],
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": "^.*MSPDebug*",
-                        "endsPattern": "^.*Bound*"
-                    }
-                }
-            ]
-        },
-        {
-            "label": "BuildAndServer",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "Build",
-                "mspdebug-server"
-            ]
         }
     ]
   }

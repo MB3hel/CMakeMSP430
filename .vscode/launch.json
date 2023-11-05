@@ -12,11 +12,14 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "${workspaceFolder}/util/msp430-elf-gdb.sh",
+            "debugServerPath": "${workspaceFolder}/util/mspdebug_flash_gdb_helper.sh",
             "windows": {
-                "miDebuggerPath": "${workspaceFolder}/util/msp430-elf-gdb.cmd"
+                "miDebuggerPath": "${workspaceFolder}/util/msp430-elf-gdb.cmd",
+                "debugServerPath": "${workspaceFolder}/util/mspdebug_flash_gdb_helper.cmd"
             },
             "miDebuggerServerAddress": "localhost:2000",
-            "preLaunchTask": "BuildAndServer"
+            "debugServerArgs": "${command:cmake.getLaunchTargetPath}",
+            "preLaunchTask": "Build"
         }
     ]
 }

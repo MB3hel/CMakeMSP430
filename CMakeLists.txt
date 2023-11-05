@@ -98,19 +98,8 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME}  POST_BUILD
 # Flash target
 ################################################################################
 add_custom_target(flash
-    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex" "verify $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex"
+    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex"
     DEPENDS ${CMAKE_PROJECT_NAME}
-    VERBATIM
-    USES_TERMINAL
-)
-################################################################################
-
-
-################################################################################
-# Debug server target
-################################################################################
-add_custom_target(mspdebug-server
-    COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "gdb"
     VERBATIM
     USES_TERMINAL
 )
