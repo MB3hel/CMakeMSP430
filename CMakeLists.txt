@@ -97,8 +97,47 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME}  POST_BUILD
 ################################################################################
 # Flash target
 ################################################################################
+if(CMAKE_HOST_WIN32)
+    set(MSPDEBUG_BINARY "${PROJECT_SOURCE_DIR}/util/mspdebug.cmd")
+else()
+    set(MSPDEBUG_BINARY "${PROJECT_SOURCE_DIR}/util/mspdebug.sh")
+endif()
 add_custom_target(flash
     COMMAND ${MSPDEBUG_BINARY} --allow-fw-update tilib --force-reset "prog $<OUTPUT_CONFIG:$<CONFIG>>/firmware.hex"
+    DEPENDS ${CMAKE_PROJECT_NAME}
+    VERBATIM
+    USES_TERMINAL
+)
+################################################################################
+
+
+################################################################################
+# Debug Server
+################################################################################
+if(CMAKE_HOST_WIN32)
+    set(DEBUG_SERVER_HELPER "${PROJECT_SOURCE_DIR}/util/mspdebug_flash_gdb_helper.cmd")
+else()
+    set(DEBUG_SERVER_HELPER "${PROJECT_SOURCE_DIR}/util/mspdebug_flash_gdb_helper.sh")
+endif()
+add_custom_target(mspdebug-server
+    COMMAND ${DEBUG_SERVER_HELPER} "$<OUTPUT_CONFIG:$<CONFIG>>/firmware.elf"
+    DEPENDS ${CMAKE_PROJECT_NAME}
+    VERBATIM
+    USES_TERMINAL
+)
+################################################################################
+
+
+################################################################################
+# GDB launch
+################################################################################
+if(CMAKE_HOST_WIN32)
+    set(GDB_BINARY "${PROJECT_SOURCE_DIR}/util/msp430-elf-gdb.cmd")
+else()
+    set(GDB_BINARY "${PROJECT_SOURCE_DIR}/util/msp430-elf-gdb.sh")
+endif()
+add_custom_target(gdb
+    COMMAND ${GDB_BINARY} "$<OUTPUT_CONFIG:$<CONFIG>>/firmware.elf" -ex "target remote :2000"
     DEPENDS ${CMAKE_PROJECT_NAME}
     VERBATIM
     USES_TERMINAL

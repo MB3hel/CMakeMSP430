@@ -1,23 +1,17 @@
 if(CMAKE_HOST_WIN32)
     set(MSP430_GCC_PATH "C:/ti/msp430-gcc")
-    set(MSPDEBUG_PATH "C:/ti/mspdebug")
     set(EXE_EXTENSION ".exe")
 elseif(CMAKE_HOST_APPLE)
     set(MSP430_GCC_PATH "/Applications/ti/msp430-gcc")
-    set(MSPDEBUG_PATH "/Applications/ti/mspdebug")
     set(EXE_EXTENSION "")
 else()
     set(MSP430_GCC_PATH "/opt/ti/msp430-gcc")
-    set(MSPDEBUG_PATH "/opt/ti/mspdebug")
     set(EXE_EXTENSION "")
 endif()
 
 # Allow overriding default paths with environment variables
 if(DEFINED ENV{TI_MSP430_GCC_ROOT})
     set(MSP430_GCC_PATH "$ENV{TI_MSP430_GCC_ROOT}")
-endif()
-if(DEFINED ENV{MSPDEBUG_ROOT})
-    set(MSPDEBUG_PATH "$ENV{MSPDEBUG_ROOT}")
 endif()
 
 set(CMAKE_SYSTEM_NAME               Generic)
@@ -32,8 +26,6 @@ set(CMAKE_AR                        ${TOOLCHAIN_PREFIX}ar${EXE_EXTENSION} CACHE 
 set(CMAKE_RANLIB                    ${TOOLCHAIN_PREFIX}ranlib${EXE_EXTENSION} CACHE FILEPATH "RANLIB path")
 set(CMAKE_OBJCOPY                   ${TOOLCHAIN_PREFIX}objcopy${EXE_EXTENSION} CACHE FILEPATH "OBJCOPY path")
 set(CMAKE_SIZE                      ${TOOLCHAIN_PREFIX}size${EXE_EXTENSION} CACHE FILEPATH "SIZE path")
-
-set(MSPDEBUG_BINARY                 ${MSPDEBUG_PATH}/mspdebug${EXE_EXTENSION} CACHE FILEPATH "MSPDEBUG path")
 
 set(CMAKE_EXECUTABLE_SUFFIX_ASM     ".elf")
 set(CMAKE_EXECUTABLE_SUFFIX_C       ".elf")
