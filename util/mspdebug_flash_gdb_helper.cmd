@@ -12,5 +12,6 @@ IF DEFINED MSPDEBUG_ROOT (
 :: Change extension from elf to hex
 :: Then program the hex and run gdb
 :: VSCode can't subtitute elf for hex, so can't do this directly in IDE
-set FILE=%1:~0,-4%
-"%MSPDEBUG%" --allow-fw-update tilib --force-reset "prog %FILE%" "gdb"
+set ELFFILE=%1
+set FILE=%ELFFILE:~0,-4%
+"%MSPDEBUG%" --allow-fw-update tilib --force-reset "prog %FILE%.hex" "gdb"
