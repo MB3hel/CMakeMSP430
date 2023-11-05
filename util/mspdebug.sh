@@ -3,8 +3,8 @@
 # Get path to mspdebug the same way toolchain file gets path for compiler
 if [ -z "$MSPDEBUG_ROOT" ]; then
     uanme_s="$(uname -s)"
-    case "${unameOut}" in
-        Darwin*) MSPDEBUG="/Applicatoins/ti/mspdebug/mspdebug" ;;
+    case "${uanme_s}" in
+        Darwin*) MSPDEBUG="/Applications/ti/mspdebug/mspdebug" ;;
         *) MSPDEBUG="/opt/ti/mspdebug/mspdebug" ;;
     esac
 else

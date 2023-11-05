@@ -7,6 +7,7 @@ This example is setup for a G2553 launchpad (newer version with ez-FET debugger)
 - Uses MSP430 GCC (not TI compiler!)
     - Install from [TI's Site](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE)
     - Install to default location (use installer not toolchain only archives as the support files are needed too).
+    - Note: On macOS, it may default to `/home/username/ti/msp430-gcc`, but install to `/Applications/ti/msp430-gcc` instead
     - Do not use Linux system packages (these are typically the older non-elf toolchain which is gcc 4.6). The newer elf toolchain is needed!
 - Requires CMake 3.20 or newer
 - Requires ninja build system installed and in your path
@@ -16,6 +17,7 @@ This example is setup for a G2553 launchpad (newer version with ez-FET debugger)
         - Windows: `C:\ti\`
         - macOS: `/Applications/ti`
         - Linux: `/opt/ti/`
+    - On macOS, run after install: `sudo xattr -r -d com.apple.quarantine /Applications/ti/mspdebug/*`. This allows running of mspdebug (not signed)
 - Note that if you install mspdebug or MSP430 GCC to different locations, you can use the `TI_MSP430_GCC_ROOT` and `MSPDEBUG_ROOT` environment variables. If installing MSP430 GCC with the archives (not installers), you also have to install the support files under `include/`.
 
 
