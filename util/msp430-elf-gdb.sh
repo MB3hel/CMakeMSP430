@@ -4,8 +4,19 @@
 if [ -z "$TI_MSP430_GCC_ROOT" ]; then
     uanme_s="$(uname -s)"
     case "${uanme_s}" in
-        Darwin*) GDB="/Applications/ti/msp430-gcc/bin/msp430-elf-gdb" ;;
-        *) GDB="/opt/ti/msp430-gcc/bin/msp430-elf-gdb" ;;
+        Darwin*) 
+            if [ -d "$HOME/ti/msp430-gcc" ]; then
+                GDB="$HOME/ti/msp430-gcc/bin/msp430-elf-gdb"
+            else
+                GDB="/Applications/ti/msp430-gcc/bin/msp430-elf-gdb"
+            fi
+        ;;
+        *) if [ -d "$HOME/ti/msp430-gcc" ]; then
+                GDB="$HOME/ti/msp430-gcc/bin/msp430-elf-gdb"
+            else
+                GDB="/opt/ti/msp430-gcc/bin/msp430-elf-gdb"
+            fi
+        ;;
     esac
 else
     GDB="$TI_MSP430_GCC_ROOT/bin/msp430-elf-gdb"
