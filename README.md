@@ -6,7 +6,7 @@ This example is setup for a G2553 launchpad (newer version with ez-FET debugger)
 
 - Uses MSP430 GCC (not TI compiler!)
     - Install from [TI's Site](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE). Use the full installer.
-    - Supported install location (first one should match default for installer)
+    - Supported install location (first one should match default for installer). On linux/macOS do **not** run the installer with `sudo` if you intend to install yo your home folder!
         - Windows: `C:\ti\msp430-gcc\`
         - macOS: `~/ti/msp430-gcc/` or `/Applications/ti/msp430-gcc/`
         - Linux: `~/ti/msp430-gcc` or `/opt/ti/msp430-gcc/`
